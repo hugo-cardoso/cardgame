@@ -10436,16 +10436,6 @@ var AppController = function () {
         value: function _init() {
             var _this = this;
 
-            this._player = new _Player2.default({
-                name: 'Hugo',
-                cards: this._generateCards()
-            });
-
-            this._bot = new _Player2.default({
-                name: 'Bot',
-                cards: this._generateCards()
-            });
-
             (0, _jquery2.default)('body').on('click', '#playerCards li', function (event) {
 
                 var _elem = (0, _jquery2.default)(event.target).closest('li');
@@ -10457,6 +10447,16 @@ var AppController = function () {
     }, {
         key: '_startGame',
         value: function _startGame() {
+
+            this._player = new _Player2.default({
+                name: 'Hugo',
+                cards: this._generateCards()
+            });
+
+            this._bot = new _Player2.default({
+                name: 'Bot',
+                cards: this._generateCards()
+            });
 
             this._playerView.update(this._player);
             this._botView.update(this._bot);
@@ -10482,9 +10482,13 @@ var AppController = function () {
             setTimeout(function () {
                 _this2._playerView.update(_this2._player);
                 _this2._botView.update(_this2._bot);
-            }, 2000);
 
-            this._round.clear();
+                if (!_this2._bot.cards.list.length) {
+                    _this2._startGame();
+                }
+
+                _this2._round.clear();
+            }, 2000);
         }
     }, {
         key: '_generateCards',
@@ -10765,10 +10769,10 @@ var CardsBotView = function () {
     key: '_template',
     value: function _template(model) {
 
-      return ' \n            <ul class="card-list">\n              \t' + model.cards.list.map(function (card) {
+      return ' <div class="board">\n                <div class="board__content">\n                  <ul class="card-list card-list--bot">\n                      ' + model.cards.list.map(function (card) {
 
-        return '\n                              <li class="card card--bot" data-id="' + card.id + '">\n                                <div class="card__content">\n                                  <span class="card__number card__number--hidden">' + card.value + '</span>\n                                </div>\n                              </li>\n                    \t\t\t\t';
-      }).join('') + '\n            </ul>\n    \n            ';
+        return '\n                                    <li class="card card--bot" data-id="' + card.id + '">\n                                      <div class="card__content">\n                                        <span class="card__number card__number--hidden">' + card.value + '</span>\n                                      </div>\n                                    </li>\n                                  ';
+      }).join('') + '\n                  </ul>\n                </div>\n              </div>\n            ';
     }
   }, {
     key: 'selectCard',
@@ -10826,10 +10830,10 @@ var CardsPlayerView = function () {
     key: '_template',
     value: function _template(model) {
 
-      return ' \n    \t\t\t\t\t<ul class="card-list">\n              \t' + model.cards.list.map(function (card) {
+      return ' <div class="board">\n                <div class="board__content">\n                  <ul class="card-list card-list--player">\n                    ' + model.cards.list.map(function (card) {
 
-        return '\n                              <li class="card card--player" data-id="' + card.id + '">\n                                <div class="card__content">\n                                  <span class="card__number">' + card.value + '</span>\n                                </div>\n                              </li>\n                    \t\t\t\t';
-      }).join('') + '\n              </ul>\n    \n    \t\t\t\t';
+        return '\n                                  <li class="card card--player" data-id="' + card.id + '">\n                                    <div class="card__content">\n                                      <span class="card__number">' + card.value + '</span>\n                                    </div>\n                                  </li>\n                                ';
+      }).join('') + '\n                  </ul>\n                </div>\n              </div>\n    \t\t\t\t';
     }
   }]);
 

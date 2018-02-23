@@ -34,8 +34,8 @@ export default class Round {
     
     get winner() {
     
-        const playerValue = this._playerSelection.value;
-        const botValue = this._botSelection.value;
+      const playerValue = this._playerSelection.value;
+      const botValue = this._botSelection.value;
       
       if( playerValue > botValue ) {
           return 'player';

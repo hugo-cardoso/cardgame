@@ -23,16 +23,6 @@ export default class AppController {
   }
   
   _init() {
-  	
-    this._player = new Player({
-    	name: 'Hugo',   
-        cards: this._generateCards()
-    });
-    
-    this._bot = new Player({
-    	name: 'Bot',
-        cards: this._generateCards()
-    });
     
     $('body').on('click','#playerCards li', event => {
     
@@ -44,6 +34,16 @@ export default class AppController {
   }
 
 _startGame() {
+
+    this._player = new Player({
+    	name: 'Hugo',   
+        cards: this._generateCards()
+    });
+    
+    this._bot = new Player({
+    	name: 'Bot',
+        cards: this._generateCards()
+    });
 
     this._playerView.update( this._player );
     this._botView.update( this._bot );
@@ -67,9 +67,14 @@ _startGame() {
     setTimeout(() => {
         this._playerView.update( this._player );
         this._botView.update( this._bot );
+
+        if( !(this._bot.cards.list.length) ) {
+            this._startGame();
+        }
+
+        this._round.clear();
+
     }, 2000);
-    
-    this._round.clear();
   }
   
   _generateCards() {

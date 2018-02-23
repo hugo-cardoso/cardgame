@@ -14,23 +14,25 @@ export default class CardsBotView {
   
   _template( model ) {
   	
-    return 	` 
-            <ul class="card-list">
-              	${ 
-                	model.cards.list.map(card => {
-                  		
-                    return 	`
-                              <li class="card card--bot" data-id="${ card.id }">
-                                <div class="card__content">
-                                  <span class="card__number card__number--hidden">${ card.value }</span>
-                                </div>
-                              </li>
-                    				`
-                    	
-                  }).join('')
-                }
-            </ul>
-    
+    return 	` <div class="board">
+                <div class="board__content">
+                  <ul class="card-list card-list--bot">
+                      ${ 
+                        model.cards.list.map(card => {
+                            
+                          return 	`
+                                    <li class="card card--bot" data-id="${ card.id }">
+                                      <div class="card__content">
+                                        <span class="card__number card__number--hidden">${ card.value }</span>
+                                      </div>
+                                    </li>
+                                  `
+                            
+                        }).join('')
+                      }
+                  </ul>
+                </div>
+              </div>
             `
   }
 
